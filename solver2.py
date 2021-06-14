@@ -3,7 +3,7 @@ import win32clipboard
 
 
 r = 3
-row_pixel = 5000
+row_pixel = 800
 cell_size = row_pixel / (r**2)
 grid = []
 init_grid = []
@@ -74,30 +74,50 @@ def initrank15grid():
 
     tempgrid[7][7].append(5)
 
+
+def initrank5grid():
+    global r, tempgrid, cell_size, font1
+
+    r = 5
+    cell_size = row_pixel / (r**2)
+    font1 = pygame.font.SysFont("comicsans", int(cell_size * 0.72))
+
+    tempgrid = []
+    for i in range(r**2):
+        row = []
+        for j in range(r**2):
+            row.append([])
+        tempgrid.append(row)
+
+
+def initrank3grid():
+    global r, tempgrid, cell_size, font1
+
+    r = 3
+    cell_size = row_pixel / (r**2)
+    font1 = pygame.font.SysFont("comicsans", int(cell_size * 0.72))
+
+    tempgrid = []
+    for i in range(r**2):
+        row = []
+        for j in range(r**2):
+            row.append([])
+        tempgrid.append(row)
+
+
 def initrank4grid():
     global r, tempgrid, cell_size, font1
 
     r = 4
     cell_size = row_pixel / (r**2)
     font1 = pygame.font.SysFont("comicsans", int(cell_size * 0.72))
-    tempgrid = [
-        [[], [], [], [], [], [], [], [], [], [], [], [], [], [], [], []],
-        [[], [], [], [], [], [], [], [], [], [], [], [], [], [], [6], [12]],
-        [[], [], [], [], [], [], [], [], [], [], [], [], [], [4], [2], [7]],
-        [[], [], [], [], [], [], [], [], [], [], [], [], [9], [13], [], [8]],
-        [[], [], [], [], [], [], [], [], [], [], [], [], [11], [], [7], [14]],
-        [[], [], [], [], [], [], [], [], [], [], [], [], [], [], [5], [10]],
-        [[], [], [], [], [], [], [], [], [], [], [], [], [], [12], [], []],
-        [[], [], [], [], [], [], [], [], [], [], [], [], [], [3], [], [15]],
-        [[], [], [], [], [], [], [], [], [], [], [], [], [], [16], [], [5]],
-        [[], [], [], [], [], [], [], [], [], [], [], [], [], [], [12], []],
-        [[], [], [], [], [], [], [], [], [], [], [], [], [8], [14], [11], []],
-        [[], [], [], [], [], [], [], [], [], [], [], [], [], [], [], []],
-        [[], [], [], [], [], [], [], [], [], [], [], [], [], [], [], []],
-        [[], [], [], [], [], [], [], [], [], [], [], [], [13], [], [], []],
-        [[], [], [], [], [], [], [], [], [], [], [], [], [7], [2], [10], []],
-        [[], [], [], [], [], [], [], [], [], [], [], [], [], [5], [4], []]
-    ]
+
+    tempgrid = []
+    for i in range(r**2):
+        row = []
+        for j in range(r**2):
+            row.append([])
+        tempgrid.append(row)
 
 def solvesudoku():
     global grid
@@ -331,6 +351,16 @@ while True:
                 grid = []
                 screen.fill((200, 200, 200))
                 initrank4grid()
+                draw()
+            elif event.key == pygame.K_5:
+                grid = []
+                screen.fill((200, 200, 200))
+                initrank5grid()
+                draw()
+            elif event.key == pygame.K_3:
+                grid = []
+                screen.fill((200, 200, 200))
+                initrank3grid()
                 draw()
             elif event.key == pygame.K_0:
                 grid = []
