@@ -30,27 +30,31 @@ grid =[
 ]
 
 # Load test fonts for future use
-font1 = pygame.font.SysFont("comicsans", 40)
-font2 = pygame.font.SysFont("comicsans", 20)
+font1 = pygame.font.SysFont("comicsans", 30)
+font2 = pygame.font.SysFont("comicsans", 15)
+
+
 def get_cord(pos):
     global x
     x = pos[0]//dif
     global y
     y = pos[1]//dif
 
+
 # Highlight the cell selected
 def draw_box():
     for i in range(2):
         pygame.draw.line(screen, (255, 0, 0), (x * dif-3, (y + i)*dif), (x * dif + dif + 3, (y + i)*dif), 7)
-        pygame.draw.line(screen, (255, 0, 0), ( (x + i)* dif, y * dif ), ((x + i) * dif, y * dif + dif), 7)
+        pygame.draw.line(screen, (255, 0, 0), ((x + i) * dif, y * dif), ((x + i) * dif, y * dif + dif), 7)
+
 
 # Function to draw required lines for making Sudoku grid
 def draw():
     # Draw the lines
 
-    for i in range (9):
-        for j in range (9):
-            if grid[i][j]!= 0:
+    for i in range(9):
+        for j in range(9):
+            if grid[i][j] != 0:
 
                 # Fill blue color in already numbered grid
                 pygame.draw.rect(screen, (0, 153, 153), (i * dif, j * dif, dif + 1, dif + 1))
@@ -60,32 +64,37 @@ def draw():
                 screen.blit(text1, (i * dif + 15, j * dif + 15))
     # Draw lines horizontally and verticallyto form grid
     for i in range(10):
-        if i % 3 == 0 :
+        if i % 3 == 0:
             thick = 7
         else:
             thick = 1
         pygame.draw.line(screen, (0, 0, 0), (0, i * dif), (500, i * dif), thick)
         pygame.draw.line(screen, (0, 0, 0), (i * dif, 0), (i * dif, 500), thick)
 
+
 # Fill value entered in cell
 def draw_val(val):
     text1 = font1.render(str(val), 1, (0, 0, 0))
     screen.blit(text1, (x * dif + 15, y * dif + 15))
 
+
 # Raise error when wrong value entered
 def raise_error1():
     text1 = font1.render("WRONG !!!", 1, (0, 0, 0))
     screen.blit(text1, (20, 570))
+
+
 def raise_error2():
     text1 = font1.render("Wrong !!! Not a valid Key", 1, (0, 0, 0))
     screen.blit(text1, (20, 570))
 
+
 # Check if the value entered in board is valid
 def valid(m, i, j, val):
     for it in range(9):
-        if m[i][it]== val:
+        if m[i][it] == val:
             return False
-        if m[it][j]== val:
+        if m[it][j] == val:
             return False
     it = i//3
     jt = j//3
@@ -95,21 +104,22 @@ def valid(m, i, j, val):
                 return False
     return True
 
+
 # Solves the sudoku board using Backtracking Algorithm
 def solve(grid, i, j):
 
-    while grid[i][j]!= 0:
-        if i<8:
-            i+= 1
-        elif i == 8 and j<8:
+    while grid[i][j] != 0:
+        if i < 8:
+            i += 1
+        elif i == 8 and j < 8:
             i = 0
-            j+= 1
+            j += 1
         elif i == 8 and j == 8:
             return True
     pygame.event.pump()
     for it in range(1, 10):
-        if valid(grid, i, j, it)== True:
-            grid[i][j]= it
+        if valid(grid, i, j, it):
+            grid[i][j] = it
             global x, y
             x = i
             y = j
@@ -119,10 +129,10 @@ def solve(grid, i, j):
             draw_box()
             pygame.display.update()
             pygame.time.delay(20)
-            if solve(grid, i, j)== 1:
+            if solve(grid, i, j) == 1:
                 return True
             else:
-                grid[i][j]= 0
+                grid[i][j] = 0
             # white color background\
             screen.fill((255, 255, 255))
 
@@ -195,6 +205,8 @@ while run:
                 val = 8
             if event.key == pygame.K_9:
                 val = 9
+            if event.key == pygame.K_0:
+                val = 0
             if event.key == pygame.K_RETURN:
                 flag2 = 1
             # If R pressed clear the sudoku board

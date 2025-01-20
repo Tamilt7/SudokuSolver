@@ -7,6 +7,7 @@ row_pixel = 800
 cell_size = row_pixel / (r**2)
 grid = []
 init_grid = []
+font_size = int(cell_size * 0.4)
 tempgrid = [[[1], [], [5], [], [], [], [9], [8], []],
             [[], [], [], [3], [], [], [], [1], []],
             [[], [7], [6], [], [], [9], [4], [], []],
@@ -17,20 +18,32 @@ tempgrid = [[[1], [], [5], [], [], [], [9], [8], []],
             [[7], [], [], [], [], [], [6], [], []],
             [[], [], [], [], [7], [1], [], [4], []]
             ]
+default_grid = "1\t\t5\t\t\t\t9\t8\t\r\n" \
+               "\t\t\t3\t\t\t\t1\t\r\n" \
+               "\t7\t6\t\t\t9\t4\t\t\r\n" \
+               "4\t\t1\t6\t9\t3\t\t2\t7\r\n" \
+               "8\t6\t2\t\t1\t5\t\t9\t4\r\n" \
+               "\t\t\t8\t\t\t\t6\t5\r\n" \
+               "\t1\t8\t4\t3\t\t\t\t\r\n" \
+               "7\t\t\t\t\t\t6\t\t\r\n" \
+               "\t\t\t\t7\t1\t\t4\t\r\n"
 
 pygame.font.init()
-font1 = pygame.font.SysFont("comicsans", int(cell_size * 0.72))
+font1 = pygame.font.SysFont("comicsans", font_size)
 
 screen = pygame.display.set_mode((row_pixel, (row_pixel + 100)))
 
 
 def getclipboardgrid():
 
-    global tempgrid
-
     win32clipboard.OpenClipboard()
     data = win32clipboard.GetClipboardData()
     win32clipboard.CloseClipboard()
+    updategrid(data)
+
+
+def updategrid(data):
+    global tempgrid
     data = data.split("\r\n")
     for i in range(len(data)):
         row = data[i].split("\t")
@@ -58,12 +71,12 @@ def getclipboardgrid():
                 tempgrid[i][j] = data[i][j]
 
 
-def initrank15grid():
+def initgrid(n):
     global r, tempgrid, cell_size, font1
 
-    r = 15
+    r = n
     cell_size = row_pixel / (r**2)
-    font1 = pygame.font.SysFont("comicsans", int(cell_size * 0.72))
+    font1 = pygame.font.SysFont("comicsans", int(cell_size * 0.4))
 
     tempgrid = []
     for i in range(r**2):
@@ -72,62 +85,10 @@ def initrank15grid():
             row.append([])
         tempgrid.append(row)
 
-    tempgrid[7][7].append(5)
-
-
-def initrank5grid():
-    global r, tempgrid, cell_size, font1
-
-    r = 5
-    cell_size = row_pixel / (r**2)
-    font1 = pygame.font.SysFont("comicsans", int(cell_size * 0.72))
-
-    tempgrid = []
-    for i in range(r**2):
-        row = []
-        for j in range(r**2):
-            row.append([])
-        tempgrid.append(row)
-
-
-def initrank3grid():
-    global r, tempgrid, cell_size, font1
-
-    r = 3
-    cell_size = row_pixel / (r**2)
-    font1 = pygame.font.SysFont("comicsans", int(cell_size * 0.72))
-
-    tempgrid = []
-    for i in range(r**2):
-        row = []
-        for j in range(r**2):
-            row.append([])
-        tempgrid.append(row)
-
-
-def initrank4grid():
-    global r, tempgrid, cell_size, font1
-
-    r = 4
-    cell_size = row_pixel / (r**2)
-    font1 = pygame.font.SysFont("comicsans", int(cell_size * 0.72))
-
-    tempgrid = []
-    for i in range(r**2):
-        row = []
-        for j in range(r**2):
-            row.append([])
-        tempgrid.append(row)
 
 def solvesudoku():
-    global grid
-
-    # for x in range(100):
-    grid1 = grid
     distinctive_iteration()
-    missing_iteration()
-    # if grid == grid1:
-    #     break
+    backtracking()
 
 
 def modifygrid():
@@ -164,7 +125,6 @@ def unique_in_relative_cells(val, x, y, relative_cells):
     relative_row_cells = []
     relative_col_cells = []
     relative_blk_cells = []
-
 
     flag1, flag2, flag3 = True, True, True
 
@@ -334,7 +294,12 @@ def draw():
                         screen.blit(text1, (cell_stt1 + cell_size_1 * 0.3, cell_stt2 + cell_size_2 * 0.3))
 
 
+def filldefault():
+    updategrid(default_grid)
+
+
 screen.fill((200, 200, 200))
+filldefault()
 draw()
 
 while True:
@@ -350,22 +315,23 @@ while True:
             elif event.key == pygame.K_4:
                 grid = []
                 screen.fill((200, 200, 200))
-                initrank4grid()
+                initgrid(4)
                 draw()
             elif event.key == pygame.K_5:
                 grid = []
                 screen.fill((200, 200, 200))
-                initrank5grid()
+                initgrid(5)
                 draw()
             elif event.key == pygame.K_3:
                 grid = []
                 screen.fill((200, 200, 200))
-                initrank3grid()
+                initgrid(3)
+                filldefault()
                 draw()
             elif event.key == pygame.K_0:
                 grid = []
                 screen.fill((200, 200, 200))
-                initrank15grid()
+                initgrid(15)
                 draw()
             elif event.key == pygame.K_RETURN:
                 print("Enter pressed..")
