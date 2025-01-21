@@ -4,9 +4,9 @@ from itertools import product
 from copy import deepcopy
 from datetime import datetime
 
-from sudokusolver.Solver_4.Matrix import Matrix
-from sudokusolver.Solver_4.Puzzle import Puzzle
-from sudokusolver.Solver_4.Solver import Solver
+from sudokusolver.solver_4.Matrix import Matrix
+from sudokusolver.solver_4.Puzzle import Puzzle
+from sudokusolver.solver_4.Solver import Solver
 
 
 backtracking_depth_max = 30
