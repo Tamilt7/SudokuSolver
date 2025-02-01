@@ -26,7 +26,7 @@ class Puzzle:
 
         self.size = len(data)
         self.rank = int(self.size**0.5)
-        self.solution = [[[z for z in range(self.size)] for y in range(self.size)] for x in range(self.size)]
+        self.solution = [[[z for z in range(self.size)] for _ in range(self.size)] for _ in range(self.size)]
 
         if len(data) != len(data[self.size - 1]):
             print("Invalid Clipboard data!")
@@ -47,7 +47,7 @@ class Puzzle:
             if len(row) != len(set(row)):
                 return False
 
-        seen = [set([-1]) for _ in range(self.size)]  # Create a set for each column
+        seen = [{-1} for _ in range(self.size)]  # Create a set for each column
 
         for row in self.question:
             for col_index, value in enumerate(row):
@@ -70,4 +70,4 @@ class Puzzle:
         return True
 
     def reset(self):
-        self.solution = [[[z for z in range(self.size)] for y in range(self.size)] for x in range(self.size)]
+        self.solution = [[[z for z in range(self.size)] for _ in range(self.size)] for _ in range(self.size)]
