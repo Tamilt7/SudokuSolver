@@ -1,5 +1,0 @@
-name: sudokusolver_5
-dependencies:
-  - python=3.9
-  - pygame
-  - pywin32

@@ -42,7 +42,7 @@ default_puzzle_2 = "\t\t11\t\t\t6\t14\t2\t\t\t3\t\t12\t\t9\t\r\n" \
                    "11\t6\t\t\t3\t\t\t7\t4\t2\t\t\t1\t8\t\t\r\n" \
                    "\t\t\t\t\t\t\t6\t\t\t1\t\t\t\t\t\r\n" \
                    "2\t\t7\t8\t\t\t\t\t3\t\t\t13\t\t\t4\t10\r\n" \
-                   "\t4\t\t10\t\t14\t\t\t9\t7\t8\t\t\t15\t\t\r\n" \
+                   "\t4\t\t10\t\t14\t\t\t9\t7\t8\t\t\t15\t\t\r\n"
 
 
 class App:
